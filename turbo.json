@@ -1,0 +1,29 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalDotEnv": [".env"],
+  "pipeline": {
+    "generate": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["generate", "^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "build:web": {
+      "dependsOn": ["@example/backend#generate"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"]
+    },
+    "lint": {
+      "dependsOn": ["^typecheck", "^lint"]
+    },
+    "dev": {
+      "dependsOn": ["generate"],
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
